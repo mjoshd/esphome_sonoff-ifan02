@@ -208,38 +208,30 @@ script:
       - delay: 200ms
       - if:
           condition:
-            and:
-              - switch.is_off: fan_relay1
-              - switch.is_off: fan_relay2
-              - switch.is_off: fan_relay3
+            lambda: |-
+              return (id(fan_relay1).state == false && id(fan_relay2).state == false && id(fan_relay3).state == false);
           then:
             - fan.turn_off: ifan02_fan
       - if:
           condition:
-            and:
-              - switch.is_on: fan_relay1
-              - switch.is_off: fan_relay2
-              - switch.is_off: fan_relay3
+            lambda: |-
+              return (id(fan_relay1).state == true && id(fan_relay2).state == false && id(fan_relay3).state == false);
           then:
             - fan.turn_on:
                 id: ifan02_fan
                 speed: 1
       - if:
           condition:
-            and:
-              - switch.is_on: fan_relay1
-              - switch.is_on: fan_relay2
-              - switch.is_off: fan_relay3
+            lambda: |-
+              return (id(fan_relay1).state == true && id(fan_relay2).state == true && id(fan_relay3).state == false);
           then:
             - fan.turn_on:
                 id: ifan02_fan
                 speed: 2
       - if:
           condition:
-            and:
-              - switch.is_on: fan_relay1
-              - switch.is_off: fan_relay2
-              - switch.is_on: fan_relay3
+            lambda: |-
+              return (id(fan_relay1).state == true && id(fan_relay2).state == false && id(fan_relay3).state == true);
           then:
             - fan.turn_on:
                 id: ifan02_fan
