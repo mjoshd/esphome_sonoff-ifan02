@@ -94,7 +94,8 @@ binary_sensor:
     on_press:
       then:
         - switch.toggle: fan_relay1
-        - switch.turn_on: update_fan_speed
+        - lambda: |-
+            id(update_ha_frontend).execute();
 
   - platform: gpio
     id: vbutton_2
@@ -104,7 +105,8 @@ binary_sensor:
     on_press:
       then:
         - switch.toggle: fan_relay2
-        - switch.turn_on: update_fan_speed
+        - lambda: |-
+            id(update_ha_frontend).execute();
 
   - platform: gpio
     id: vbutton_3
@@ -114,7 +116,8 @@ binary_sensor:
     on_press:
       then:
         - switch.toggle: fan_relay3
-        - switch.turn_on: update_fan_speed
+        - lambda: |-
+            id(update_ha_frontend).execute();
 
 
 
@@ -183,53 +186,6 @@ output:
 
 # https://esphome.io/components/switch/index.html
 switch:
-  # https://esphome.io/components/switch/template.html
-  - platform: template
-    id: update_fan_speed
-    optimistic: true
-    turn_on_action:
-      then:
-        - delay: 200ms
-        - if:
-            condition:
-              and:
-                - switch.is_off: fan_relay1
-                - switch.is_off: fan_relay2
-                - switch.is_off: fan_relay3
-            then:
-              - fan.turn_off: ifan02_fan
-        - if:
-            condition:
-              and:
-                - switch.is_on: fan_relay1
-                - switch.is_off: fan_relay2
-                - switch.is_off: fan_relay3
-            then:
-              - fan.turn_on:
-                  id: ifan02_fan
-                  speed: 1
-        - if:
-            condition:
-              and:
-                - switch.is_on: fan_relay1
-                - switch.is_on: fan_relay2
-                - switch.is_off: fan_relay3
-            then:
-              - fan.turn_on:
-                  id: ifan02_fan
-                  speed: 2
-        - if:
-            condition:
-              and:
-                - switch.is_on: fan_relay1
-                - switch.is_off: fan_relay2
-                - switch.is_on: fan_relay3
-            then:
-              - fan.turn_on:
-                  id: ifan02_fan
-                  speed: 3
-        - switch.turn_off: update_fan_speed
-
   # https://esphome.io/components/switch/gpio.html
   - platform: gpio
     pin: GPIO5
@@ -242,3 +198,50 @@ switch:
   - platform: gpio
     pin: GPIO15
     id: fan_relay3
+
+
+
+# https://esphome.io/guides/automations.html?highlight=script#script-execute-action
+script:
+  # https://esphome.io/guides/automations.html
+  - id: update_ha_frontend
+    then:
+      - delay: 200ms
+      - if:
+          condition:
+            and:
+              - switch.is_off: fan_relay1
+              - switch.is_off: fan_relay2
+              - switch.is_off: fan_relay3
+          then:
+            - fan.turn_off: ifan02_fan
+      - if:
+          condition:
+            and:
+              - switch.is_on: fan_relay1
+              - switch.is_off: fan_relay2
+              - switch.is_off: fan_relay3
+          then:
+            - fan.turn_on:
+                id: ifan02_fan
+                speed: 1
+      - if:
+          condition:
+            and:
+              - switch.is_on: fan_relay1
+              - switch.is_on: fan_relay2
+              - switch.is_off: fan_relay3
+          then:
+            - fan.turn_on:
+                id: ifan02_fan
+                speed: 2
+      - if:
+          condition:
+            and:
+              - switch.is_on: fan_relay1
+              - switch.is_off: fan_relay2
+              - switch.is_on: fan_relay3
+          then:
+            - fan.turn_on:
+                id: ifan02_fan
+                speed: 3
