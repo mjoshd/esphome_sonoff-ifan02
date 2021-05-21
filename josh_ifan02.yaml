@@ -144,7 +144,12 @@ light:
 
 # https://esphome.io/components/output/index.html
 output:
-# https://esphome.io/components/output/template.html
+  # https://esphome.io/components/output/gpio.html
+  - platform: gpio
+    pin: GPIO12
+    id: output_light
+
+  # https://esphome.io/components/output/template.html
   - platform: template
     id: output_fan
     type: float
@@ -175,12 +180,6 @@ output:
         }
         ESP_LOGD("id(ifan02_fan).state ", "%d", id(ifan02_fan).state);
         ESP_LOGD("id(ifan02_fan).speed ", "%d", id(ifan02_fan).speed);
-
-
-  # https://esphome.io/components/output/gpio.html
-  - platform: gpio
-    pin: GPIO12
-    id: output_light
 
 
 
