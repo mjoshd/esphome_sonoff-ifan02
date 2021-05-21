@@ -1,18 +1,18 @@
 # https://esphome.io/guides/configuration-types.html#substitutions
+# https://esphome.io/guides/faq.html?highlight=secret#how-do-i-use-my-home-assistant-secrets-yaml
 substitutions:  
   device_name: josh_ifan02
   friendly_name: Josh Ceiling
-  # static_ip: !secret josh_ifan02_ip   # use /config/esphome/secrets.yaml
-
-  ### hopefully shouldn't need to change anything below this line
-  wifi_ssid: !secret wifi_ssid_not   # use /config/esphome/secrets.yaml
-  wifi_password: !secret wifi_password_not   # use /config/esphome/secrets.yaml
-  gateway: !secret wifi_gateway_not   # use /config/esphome/secrets.yaml
-  subnet: !secret wifi_subnet_not   # use /config/esphome/secrets.yaml
-  dns1: !secret wifi_dns1_not   # use /config/esphome/secrets.yaml
-  ap_password: !secret esphome_ap_password   # use /config/esphome/secrets.yaml
-  api_password: !secret esphome_api_password   # use /config/esphome/secrets.yaml
-  ota_password: !secret esphome_ota_password   # use /config/esphome/secrets.yaml
+  wifi_ssid: !secret wifi_ssid_not
+  wifi_password: !secret wifi_password_not
+  # static_ip: !secret josh_ifan02_ip
+  gateway: !secret wifi_gateway_not
+  subnet: !secret wifi_subnet_not
+  dns1: !secret wifi_dns1_not
+  ap_password: !secret esphome_ap_password
+  api_password: !secret esphome_api_password
+  ota_password: !secret esphome_ota_password
+### shouldn't need to change anything below this line ###
 
 
 
